@@ -3,10 +3,10 @@
 
 <head>
 
-    <title>Expense &nbsp|&nbsp e</title>
+    <title>Expense &nbsp|&nbsp Home</title>
     <link rel="icon" href="/images/favicon.png">
   
-    <link rel="stylesheet" href="/stylesheets/expense-index.css">
+    <link rel="stylesheet" href="/stylesheets/expense.css">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -51,7 +51,7 @@
                                     for(var i = 0; i< data.length; i++) {%>  
                                         <tr>
                                             <th scope="row" class="text-center"><%= (i+1) %></th>
-                                            <td><%= data[i].purchase_date %></td>
+                                            <td><%= new Date(data[i].purchase_date).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }) %></td>
                                             <td>Rp<%= data[i].purchase_amount %></td>
                                             <td><%= data[i].purchase_item %></td>
                                             <td><%= data[i].reimburse %></td>
@@ -82,7 +82,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    </script>
 
+    <script>
+        let purchase_date = new Date("Wed Mar 26 2025 00:00:00 GMT+0700");
+        let formattedDate = purchase_date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+        console.log(formattedDate);
+    </script>
+    
 </body>
 </html>

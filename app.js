@@ -40,6 +40,9 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/expense', expenseRouter); // use route expense di Express
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
