@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Expense &nbsp|&nbsp Home</title>
+    <title>Expense &nbsp|&nbsp HOME</title>
     <link rel="icon" href="/images/favicon.png">
   
     <link rel="stylesheet" href="/stylesheets/expense.css">
@@ -15,11 +15,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   </head>
 
 <body>
 
     <div class="container mt-5">
+        
+        <div class="nav">
+            <h1>meeo~</h1>
+
+            <div class="nav-btn">
+                <a id="hover" href="/" target="_blank">
+                    <i class="fa fa-arrow-left"></i>&nbsp&nbsp&nbsp&nbsp B A C K</a>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
 
@@ -33,7 +45,8 @@
 
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
-                        <a href="expense/create" class="btn btn-md btn-success mb-3">Add Expense</a>
+                        <a href="expense/create" style="background: #ffa21b ; border: none;" class="btn btn-md btn-success mb-3">
+                            <i class="fa fa-plus"></i>&nbsp&nbsp ADD</a>
                         <table class="table table-bordered">
                             <thead>
                               <tr>
@@ -56,8 +69,10 @@
                                             <td><%= data[i].purchase_item %></td>
                                             <td><%= data[i].reimburse %></td>
                                             <td class="text-center">
-                                                <a href="/expense/edit/<%=data[i].purchase_id%>" class="btn btn-sm btn-primary">EDIT</a>
-                                                <a onclick="return alert('Are You Sure?')" href="/expense/delete/<%=data[i].purchase_id%>" class="btn btn-sm btn-danger">DELETE</a>
+                                                <a href="/expense/edit/<%=data[i].purchase_id%>" class="btn btn-sm btn-primary">
+                                                    <i class="fa fa-pencil-square-o"></i>&nbsp&nbsp EDIT</a>
+                                                <a onclick="return alert('Are You Sure?')" href="/expense/delete/<%=data[i].purchase_id%>" class= "btn btn-sm btn-danger">
+                                                    <i class="fa fa-trash"></i>&nbsp&nbsp DELETE</a>
                                             </td>
                                         </tr>
                                     <% }

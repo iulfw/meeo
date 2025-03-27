@@ -72,6 +72,8 @@ router.get('/edit/:purchase_id', function (req, res, next) {
 
 // UPDATE
 router.post('/update/:purchase_id', function (req, res, next) {
+    console.log("Received Data:", req.body);
+
     let purchase_id = req.params.purchase_id;
     let purchase_date = req.body.purchase_date;
     let purchase_amount = req.body.purchase_amount;

@@ -3,7 +3,7 @@
 
 <head>
     
-    <title>Expense &nbsp|&nbsp Edit</title>
+    <title>Expense &nbsp|&nbsp EDIT</title>
     <link rel="icon" href="/images/favicon.png">
   
     <link rel="stylesheet" href="/stylesheets/expense.css">
@@ -17,10 +17,10 @@
 
 </head>
 
-<body style="background: lightgray">
+<body>
 
     <div class="container mt-5">
-        <div class="row">
+        <div class="row" style="margin-top: 13vh;">
             <div class="col-md-12">
                 <% if (messages.error) { %>
                     <div class="alert alert-danger" role="alert"><%- messages.error %></div>
@@ -29,15 +29,15 @@
                     <div class="card-body">
                         <form action="/expense/update/<%= purchase_id %>" method="post">
                             <div class="form-group">
-                                <label>Purchase Date</label>
+                                <label>Date</label>
                                 <input type="date" class="form-control" name="purchase_date" value="<%= purchase_date %>">
                             </div>
                             <div class="form-group">
-                                <label>Purchase Amount</label>
+                                <label>Amount</label>
                                 <input type="number" class="form-control" name="purchase_amount" value="<%= purchase_amount %>">
                             </div>
                             <div class="form-group">
-                                <label>Purchase Item</label>
+                                <label>Item</label>
                                 <input type="text" class="form-control" name="purchase_item" value="<%= purchase_item %>">
                             </div>
                             <div class="form-group">

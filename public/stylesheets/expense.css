@@ -1,13 +1,73 @@
 * {
     font-family: "Inter", sans-serif;
     color: black;
+    font-size: 14px;
 }
 
 body {
     background: #fff8e7 !important;
 }
 
+.nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10vh;
+    align-items: center;
+}
+
+.nav h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+.nav-btn i {
+    color: black;
+}
+
+#hover {
+    background: #ffd61f;
+    padding: 8px 24px;
+    color: black;
+    font-weight: bold;
+    border-radius: 10px;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+#hover:hover {
+    background: none;
+    color: black;
+    border: solid 1px black;
+    transition: all 0.3s;
+}
+
+.row {
+    margin-top: 30px;
+}
+
 .card-body {
-    margin-top: 0;
+    margin-top: 15px;
     background: white;
+}
+
+.text-center a {
+    font-weight: bold;
+    padding: 5px 15px;
+    width: 100px;
+    border-radius: 10px;
+}
+
+.fa {
+    color: white;
+}
+
+.card-body a {
+    font-weight: bold;
+    padding: 5px 15px;
+    width: 100px;
+    border-radius: 10px;
+}
+
+.fa-solid {
+    color: white;
 }
