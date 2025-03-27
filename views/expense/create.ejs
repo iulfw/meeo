@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Create Blogs - SantriKoding.com</title>
+    <title>Create Expense - SantriKoding.com</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
@@ -17,19 +17,32 @@
             <div class="col-md-12">
                 <% if (messages.error) { %>
                     <div class="alert alert-danger" role="alert"><%- messages.error %></div>
-                    <% } %>
+                <% } %>
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
                         <form action="/expense/store" method="post">
                             <div class="form-group">
-                                <label>Title</label>
-                                <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="Masukkan Title Post">
+                                <label>Date</label>
+                                <input type="date" class="form-control" name="purchase_date" value="<%= purchase_date %>">
                             </div>
                             <div class="form-group">
-                                <label>Konten</label>
-                                <textarea class="form-control" name="content" rows="4" placeholder="Masukkan Konten Post"><%= content %></textarea>
+                                <label>Amount</label>
+                                <input type="number" class="form-control" name="purchase_amount" value="<%= purchase_amount %>">
                             </div>
-                            <button type="submit" class="btn btn-primary">SIMPAN</button>
+                            <div class="form-group">
+                                <label>Item</label>
+                                <input type="text" class="form-control" name="purchase_item" value="<%= purchase_item %>">
+                            </div>
+                            <div class="form-group">
+                                <label>Reimburse</label>
+                                <select class="form-control" name="reimburse">
+                                    <option value="JC" <%= reimburse === 'JC' ? 'selected' : '' %>>JC</option>
+                                    <option value="LF" <%= reimburse === 'LF' ? 'selected' : '' %>>LF</option>
+                                    <option value="KF" <%= reimburse === 'KF' ? 'selected' : '' %>>KF</option>
+                                    <option value="CA" <%= reimburse === 'CA' ? 'selected' : '' %>>CA</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">SAVE</button>
                             <button type="reset" class="btn btn-warning">RESET</button>
                         </form>
                     </div>
@@ -41,6 +54,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    </script>
+
 </body>
 </html>

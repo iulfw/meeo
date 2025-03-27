@@ -1,213 +1,111 @@
 var express = require('express');
 var router = express.Router();
-
-//import database
 var connection = require('../library/database');
 
-/**
- * INDEX expense
- */
+// INDEX
 router.get('/', function (req, res, next) {
-    //query
-    connection.query('SELECT * FROM expense ORDER BY id desc', function (err, rows) {
+    connection.query('SELECT * FROM expense ORDER BY purchase_id DESC', function (err, rows) {
         if (err) {
             req.flash('error', err);
-            res.render('expense', {
-                data: ''
-            });
+            res.render('expense', { data: '' });
         } else {
-            //render ke view expense index
-            res.render('expense/index', {
-                data: rows // <-- data expense
-            });
+            res.render('expense/index', { data: rows });
         }
     });
 });
 
-/**
- * CREATE POST
- */
+// CREATE
 router.get('/create', function (req, res, next) {
     res.render('expense/create', {
-        title: '',
-        content: ''
-    })
-})
+        purchase_date: '',
+        purchase_amount: '',
+        purchase_item: '',
+        reimburse: ''
+    });
+});
 
-/**
- * STORE POST
- */
+// STORE
 router.post('/store', function (req, res, next) {
-    
+    let purchase_date = req.body.purchase_date;
+    let purchase_amount = req.body.purchase_amount;
+    let purchase_item = req.body.purchase_item;
+    let reimburse = req.body.reimburse;
+    let errors = false;
 
-    let title   = req.body.title;
-    let content = req.body.content;
-    let errors  = false;
-
-    if(title.length === 0) {
+    if (!purchase_date || !purchase_amount || !purchase_item || !reimburse) {
         errors = true;
-
-        // set flash message
-        req.flash('error', "Silahkan Masukkan Title");
-        // render to add.ejs with flash message
+        req.flash('error', "Please fill in all fields");
         res.render('expense/create', {
-            title: title,
-            content: content
-        })
+            purchase_date,
+            purchase_amount,
+            purchase_item,
+            reimburse
+        });
     }
 
-    if(content.length === 0) {
-        errors = true;
-
-        // set flash message
-        req.flash('error', "Silahkan Masukkan Konten");
-        // render to add.ejs with flash message
-        res.render('expense/create', {
-            title: title,
-            content: content
-        })
-    }
-
-    // if no error
-    if(!errors) {
-
-        let formData = {
-            title: title,
-            content: content
-        }
-        
-        // insert query
-        connection.query('INSERT INTO expense SET ?', formData, function(err, result) {
-            //if(err) throw err
+    if (!errors) {
+        let formData = { purchase_date, purchase_amount, purchase_item, reimburse };
+        connection.query('INSERT INTO expense SET ?', formData, function (err) {
             if (err) {
-                req.flash('error', err)
-                 
-                // render to add.ejs
-                res.render('expense/create', {
-                    title: formData.title,
-                    content: formData.content                    
-                })
-            } else {                
-                req.flash('success', 'Data Berhasil Disimpan!');
-                res.redirect('/expense');
-            }
-        })
-    }
-
-})
-
-/**
- * EDIT POST
- */
-router.get('/edit/(:id)', function(req, res, next) {
-
-    let id = req.params.id;
-   
-    connection.query('SELECT * FROM expense WHERE id = ' + id, function(err, rows, fields) {
-        if(err) throw err
-         
-        // if user not found
-        if (rows.length <= 0) {
-            req.flash('error', 'Data Post Dengan ID ' + id + " Tidak Ditemukan")
-            res.redirect('/expense')
-        }
-        // if book found
-        else {
-            // render to edit.ejs
-            res.render('expense/edit', {
-                id:      rows[0].id,
-                title:   rows[0].title,
-                content: rows[0].content
-            })
-        }
-    })
-})
-
-/**
- * UPDATE POST
- */
-router.post('/update/:id', function(req, res, next) {
-
-    let id      = req.params.id;
-    let title   = req.body.title;
-    let content = req.body.content;
-    let errors  = false;
-
-    if(title.length === 0) {
-        errors = true;
-
-        // set flash message
-        req.flash('error', "Silahkan Masukkan Title");
-        // render to edit.ejs with flash message
-        res.render('expense/edit', {
-            id:         req.params.id,
-            title:      title,
-            content:    content
-        })
-    }
-
-    if(content.length === 0) {
-        errors = true;
-
-        // set flash message
-        req.flash('error', "Silahkan Masukkan Konten");
-        // render to edit.ejs with flash message
-        res.render('expense/edit', {
-            id:         req.params.id,
-            title:      title,
-            content:    content
-        })
-    }
-
-    // if no error
-    if( !errors ) {   
- 
-        let formData = {
-            title: title,
-            content: content
-        }
-
-        // update query
-        connection.query('UPDATE expense SET ? WHERE id = ' + id, formData, function(err, result) {
-            //if(err) throw err
-            if (err) {
-                // set flash message
-                req.flash('error', err)
-                // render to edit.ejs
-                res.render('expense/edit', {
-                    id:     req.params.id,
-                    name:   formData.name,
-                    author: formData.author
-                })
+                req.flash('error', err);
+                res.render('expense/create', formData);
             } else {
-                req.flash('success', 'Data Berhasil Diupdate!');
+                req.flash('success', 'Data successfully saved!');
                 res.redirect('/expense');
             }
-        })
+        });
     }
-})
+});
 
-/**
- * DELETE POST
- */
-router.get('/delete/(:id)', function(req, res, next) {
-
-    let id = req.params.id;
-     
-    connection.query('DELETE FROM expense WHERE id = ' + id, function(err, result) {
-        //if(err) throw err
-        if (err) {
-            // set flash message
-            req.flash('error', err)
-            // redirect to expense page
-            res.redirect('/expense')
+// EDIT
+router.get('/edit/:purchase_id', function (req, res, next) {
+    let purchase_id = req.params.purchase_id;
+    connection.query('SELECT * FROM expense WHERE purchase_id = ?', [purchase_id], function (err, rows) {
+        if (err || rows.length === 0) {
+            req.flash('error', 'Data not found');
+            res.redirect('/expense');
         } else {
-            // set flash message
-            req.flash('success', 'Data Berhasil Dihapus!')
-            // redirect to expense page
-            res.redirect('/expense')
+            res.render('expense/edit', rows[0]);
         }
-    })
-})
+    });
+});
+
+// UPDATE
+router.post('/update/:purchase_id', function (req, res, next) {
+    let purchase_id = req.params.purchase_id;
+    let purchase_date = req.body.purchase_date;
+    let purchase_amount = req.body.purchase_amount;
+    let purchase_item = req.body.purchase_item;
+    let reimburse = req.body.reimburse;
+
+    if (!purchase_date || !purchase_amount || !purchase_item || !reimburse) {
+        req.flash('error', "Please fill in all fields");
+        res.render('expense/edit', { purchase_id, purchase_date, purchase_amount, purchase_item, reimburse });
+    } else {
+        let formData = { purchase_date, purchase_amount, purchase_item, reimburse };
+        connection.query('UPDATE expense SET ? WHERE purchase_id = ?', [formData, purchase_id], function (err) {
+            if (err) {
+                req.flash('error', err);
+                res.render('expense/edit', { purchase_id, ...formData });
+            } else {
+                req.flash('success', 'Data successfully updated!');
+                res.redirect('/expense');
+            }
+        });
+    }
+});
+
+// DELETE
+router.get('/delete/:purchase_id', function (req, res, next) {
+    let purchase_id = req.params.purchase_id;
+    connection.query('DELETE FROM expense WHERE purchase_id = ?', [purchase_id], function (err) {
+        if (err) {
+            req.flash('error', err);
+        } else {
+            req.flash('success', 'Data successfully deleted!');
+        }
+        res.redirect('/expense');
+    });
+});
 
 module.exports = router;
