@@ -1,0 +1,13 @@
+* {
+    font-family: "Inter", sans-serif;
+    color: black;
+}
+
+body {
+    background: #fff8e7 !important;
+}
+
+.card-body {
+    margin-top: 5%;
+    background: white;
+}

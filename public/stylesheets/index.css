@@ -1,0 +1,46 @@
+* {
+  font-family: "Inter", sans-serif;
+  color: black;
+}
+
+body {
+  padding: 100px;
+  background-image: url("/images/background.png");
+  background-size: cover;
+  text-align: center;
+  background-repeat: no-repeat;
+  min-height: 76vh;
+}
+
+#logo {
+  width: 80px;
+  margin-bottom: -50px;
+}
+
+h1 {
+  font-size: 96px;
+  font-weight: 800;
+  margin-bottom: -20px;
+}
+
+p {
+  font-size: 20px;
+}
+
+.meeo {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+#meeo {
+  width: 550px;
+  transition: transform .5s ease;
+  transform-origin: bottom center;
+}
+
+#meeo:hover {
+  transform: scale(1.2);
+}

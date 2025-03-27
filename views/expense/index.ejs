@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="wpurchase_idth=device-wpurchase_idth, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <title>Expense &nbsp|&nbsp Home</title>
+    <link rel="icon" href="/images/favicon.png">
+  
+    <link rel="stylesheet" href="/stylesheets/expense-index.css">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-</head>
-<body style="background: lightgray">
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  
+  </head>
+
+<body>
 
     <div class="container mt-5">
         <div class="row">
@@ -43,7 +52,7 @@
                                         <tr>
                                             <th scope="row" class="text-center"><%= (i+1) %></th>
                                             <td><%= data[i].purchase_date %></td>
-                                            <td>$<%= data[i].purchase_amount %></td>
+                                            <td>Rp<%= data[i].purchase_amount %></td>
                                             <td><%= data[i].purchase_item %></td>
                                             <td><%= data[i].reimburse %></td>
                                             <td class="text-center">
