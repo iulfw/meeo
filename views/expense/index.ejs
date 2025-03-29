@@ -71,7 +71,7 @@
                                             <td class="text-center">
                                                 <a href="/expense/edit/<%=data[i].purchase_id%>" class="btn btn-sm btn-primary">
                                                     <i class="fa fa-pencil-square-o"></i>&nbsp&nbsp EDIT</a>
-                                                <a onclick="return alert('Are You Sure?')" href="/expense/delete/<%=data[i].purchase_id%>" class= "btn btn-sm btn-danger">
+                                                <a onclick="return confirm('Are You Sure?')" href="/expense/delete/<%=data[i].purchase_id%>" class= "btn btn-sm btn-danger">
                                                     <i class="fa fa-trash"></i>&nbsp&nbsp DELETE</a>
                                             </td>
                                         </tr>
@@ -81,7 +81,7 @@
                                     <tr>
                                         <td colspan="5">
                                             <div class="alert alert-danger" role="alert">
-                                                Data Not Found!
+                                                Data Not Available!
                                             </div>
                                         </td>
                                     </tr>
