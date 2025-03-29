@@ -6,6 +6,16 @@
 
 body {
     background: #fff8e7 !important;
+    animation: fadeIn 0.2s ease-in forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .nav {
@@ -32,13 +42,13 @@ body {
     border-radius: 10px;
     font-size: 16px;
     text-decoration: none;
+    transition: all .3s ease;
 }
 
 #hover:hover {
     background: none;
     color: black;
     border: solid 1px black;
-    transition: all 0.3s;
 }
 
 .row {

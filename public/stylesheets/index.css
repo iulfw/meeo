@@ -10,6 +10,18 @@ body {
   text-align: center;
   background-repeat: no-repeat;
   min-height: 76vh;
+  animation: slideUp 0.5s ease-in-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+      opacity: 0;
+      transform: translateY(50px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
 }
 
 #logo {
