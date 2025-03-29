@@ -15,6 +15,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body>
@@ -27,6 +29,10 @@
                 <% } %>
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
+
+                        <a href="javascript:history.back()" class="btn custom-back-btn mb-4" style="padding: 0; display: inline-flex; line-height: 1;">
+                            <i class="fa fa-arrow-circle-o-left" style="color: black; vertical-align: middle;"></i>&nbsp&nbsp Back</a>
+
                         <form action="/expense/store" method="post">
                             <div class="form-group">
                                 <label>Date</label>
@@ -43,12 +49,13 @@
                             <div class="form-group">
                                 <label>Reimburse</label>
                                 <select class="form-control" name="reimburse">
+                                    <option value="" selected disabled>- Select Person -</option>
                                     <option value="JC" <%= reimburse === 'JC' ? 'selected' : '' %>>JC</option>
                                     <option value="LF" <%= reimburse === 'LF' ? 'selected' : '' %>>LF</option>
                                     <option value="KF" <%= reimburse === 'KF' ? 'selected' : '' %>>KF</option>
                                     <option value="CA" <%= reimburse === 'CA' ? 'selected' : '' %>>CA</option>
                                 </select>
-                            </div>
+                            </div>                            
                             <button type="submit" class="btn btn-primary">SAVE</button>
                             <button type="reset" class="btn btn-warning">RESET</button>
                         </form>
