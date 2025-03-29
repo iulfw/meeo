@@ -38,7 +38,7 @@ app.use(flash())
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/expense', expenseRouter); // use route expense di Express
+app.use('/expense', expenseRouter);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

@@ -34,7 +34,7 @@ router.post('/store', function (req, res, next) {
 
     if (!purchase_date || !purchase_amount || !purchase_item || !reimburse) {
         errors = true;
-        req.flash('error', "Please fill in all fields");
+        req.flash('error', "Please Fill In All Fields");
         res.render('expense/create', {
             purchase_date,
             purchase_amount,
@@ -50,7 +50,7 @@ router.post('/store', function (req, res, next) {
                 req.flash('error', err);
                 res.render('expense/create', formData);
             } else {
-                req.flash('success', 'Data successfully saved!');
+                req.flash('success', 'Data Successfully Saved!');
                 res.redirect('/expense');
             }
         });
@@ -62,7 +62,7 @@ router.get('/edit/:purchase_id', function (req, res, next) {
     let purchase_id = req.params.purchase_id;
     connection.query('SELECT * FROM expense WHERE purchase_id = ?', [purchase_id], function (err, rows) {
         if (err || rows.length === 0) {
-            req.flash('error', 'Data not found');
+            req.flash('error', 'Data Not Found');
             res.redirect('/expense');
         } else {
             res.render('expense/edit', rows[0]);
@@ -72,7 +72,6 @@ router.get('/edit/:purchase_id', function (req, res, next) {
 
 // UPDATE
 router.post('/update/:purchase_id', function (req, res, next) {
-    console.log("Received Data:", req.body);
 
     let purchase_id = req.params.purchase_id;
     let purchase_date = req.body.purchase_date;
@@ -81,7 +80,7 @@ router.post('/update/:purchase_id', function (req, res, next) {
     let reimburse = req.body.reimburse;
 
     if (!purchase_date || !purchase_amount || !purchase_item || !reimburse) {
-        req.flash('error', "Please fill in all fields");
+        req.flash('error', "Please Fill In All Fields");
         res.render('expense/edit', { purchase_id, purchase_date, purchase_amount, purchase_item, reimburse });
     } else {
         let formData = { purchase_date, purchase_amount, purchase_item, reimburse };
@@ -90,7 +89,7 @@ router.post('/update/:purchase_id', function (req, res, next) {
                 req.flash('error', err);
                 res.render('expense/edit', { purchase_id, ...formData });
             } else {
-                req.flash('success', 'Data successfully updated!');
+                req.flash('success', 'Data Successfully Updated!');
                 res.redirect('/expense');
             }
         });
@@ -104,7 +103,7 @@ router.get('/delete/:purchase_id', function (req, res, next) {
         if (err) {
             req.flash('error', err);
         } else {
-            req.flash('success', 'Data successfully deleted!');
+            req.flash('success', 'Data Successfully Deleted!');
         }
         res.redirect('/expense');
     });
