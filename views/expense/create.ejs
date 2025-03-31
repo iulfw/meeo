@@ -48,14 +48,19 @@
                             </div>
                             <div class="form-group">
                                 <label>Reimburse</label>
-                                <select class="form-control" name="reimburse">
-                                    <option value="" selected disabled>- Select Person -</option>
-                                    <option value="JC" <%= reimburse === 'JC' ? 'selected' : '' %>>JC</option>
-                                    <option value="LF" <%= reimburse === 'LF' ? 'selected' : '' %>>LF</option>
-                                    <option value="KF" <%= reimburse === 'KF' ? 'selected' : '' %>>KF</option>
-                                    <option value="CA" <%= reimburse === 'CA' ? 'selected' : '' %>>CA</option>
-                                </select>
-                            </div>                            
+                                <div style="display: flex; align-items: center; gap: 20px;">
+                                    <select class="form-control" name="reimburse" style="flex: 1;">
+                                        <option value="" selected disabled>- Select Person -</option>
+                                        <option value="JC" <%= reimburse === 'JC' ? 'selected' : '' %>>JC</option>
+                                        <option value="LF" <%= reimburse === 'LF' ? 'selected' : '' %>>LF</option>
+                                        <option value="KF" <%= reimburse === 'KF' ? 'selected' : '' %>>KF</option>
+                                        <option value="CA" <%= reimburse === 'CA' ? 'selected' : '' %>>CA</option>
+                                    </select>
+                                    <input type="hidden" name="reimburse_status" value="0">
+                                    <input type="checkbox" name="reimburse_status" value="1" <%= reimburse_status ? 'checked' : '' %> 
+                                        style="transform: scale(2.5); margin-right: 10px;">
+                                </div>
+                            </div>                                                                                 
                             <button type="submit" class="btn btn-info">SAVE</button>
                             <button type="reset" class="btn btn-secondary">RESET</button>
                         </form>

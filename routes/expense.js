@@ -63,26 +63,26 @@ router.post('/store', function (req, res, next) {
     let purchase_date = req.body.purchase_date;
     let purchase_amount = req.body.purchase_amount;
     let purchase_item = req.body.purchase_item;
-    let purchase_receipt = req.file ? req.file.filename : null;
+    // let purchase_receipt = req.file ? req.file.filename : null;
     let reimburse = req.body.reimburse;
-    let reimburse_status = req.body.reimburse_status;
+    let reimburse_status = Array.isArray(req.body.reimburse_status) ? req.body.reimburse_status.pop() : req.body.reimburse_status; reimburse_status = reimburse_status === '1' ? 1 : 0;
     let errors = false;
 
-    if (!purchase_date || !purchase_amount || !purchase_item || !reimburse) {
+    if (!purchase_date || !purchase_amount || !purchase_item || !reimburse || !reimburse_status === null || !reimburse_status === undefined) {
         errors = true;
         req.flash('error', "Please Fill In All Fields");
         res.render('expense/create', {
             purchase_date,
             purchase_amount,
             purchase_item,
-            purchase_receipt,
+            // purchase_receipt,
             reimburse,
             reimburse_status
         });
     }
 
     if (!errors) {
-        let formData = { purchase_date, purchase_amount, purchase_item, purchase_receipt, reimburse, reimburse_status };
+        let formData = { purchase_date, purchase_amount, purchase_item, reimburse, reimburse_status };
         connection.query('INSERT INTO expense SET ?', formData, function (err) {
             if (err) {
                 req.flash('error', err);
@@ -115,15 +115,15 @@ router.post('/update/:purchase_id', function (req, res, next) {
     let purchase_date = req.body.purchase_date;
     let purchase_amount = req.body.purchase_amount;
     let purchase_item = req.body.purchase_item;
-    let purchase_receipt = req.file ? req.file.filename : old_purchase_receipt;
+    // let purchase_receipt = req.file ? req.file.filename : old_purchase_receipt;
     let reimburse = req.body.reimburse;
-    let reimburse_status = req.body.reimburse_status;
+    let reimburse_status = Array.isArray(req.body.reimburse_status) ? req.body.reimburse_status.pop() : req.body.reimburse_status; reimburse_status = reimburse_status === '1' ? 1 : 0;
 
-    if (!purchase_date || !purchase_amount || !purchase_item || !purchase_receipt || !reimburse || !reimburse_status) {
+    if (!purchase_date || !purchase_amount || !purchase_item || !reimburse || !reimburse_status === null || !reimburse_status === undefined) {
         req.flash('error', "Please Fill In All Fields");
-        res.render('expense/edit', { purchase_id, purchase_date, purchase_amount, purchase_item, purchase_receipt, reimburse, reimburse_status });
+        res.render('expense/edit', { purchase_id, purchase_date, purchase_amount, purchase_item, reimburse, reimburse_status });
     } else {
-        let formData = { purchase_date, purchase_amount, purchase_item, purchase_item, purchase_receipt, reimburse, reimburse_status };
+        let formData = { purchase_date, purchase_amount, purchase_item, purchase_item, reimburse, reimburse_status };
         connection.query('UPDATE expense SET ? WHERE purchase_id = ?', [formData, purchase_id], function (err) {
             if (err) {
                 req.flash('error', err);
