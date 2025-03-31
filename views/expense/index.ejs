@@ -5,16 +5,18 @@
 
     <title>Expense &nbsp|&nbsp HOME</title>
     <link rel="icon" href="/images/favicon.png">
-  
+
     <link rel="stylesheet" href="/stylesheets/expense.css">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-  
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-  
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
@@ -22,7 +24,7 @@
 <body>
 
     <div class="container mt-5">
-        
+
         <div class="nav">
             <h1>List of <span style="font-weight: 800; font-size: 40px;">Expenses</b></h1>
 
@@ -37,66 +39,98 @@
 
                 <% if (messages.success) { %>
                     <div class="alert alert-success" role="alert"><%- messages.success %></div>
-                <% } %>
-                
-                <% if (messages.error) { %>
-                    <div class="alert alert-danger" role="alert"><%- messages.error %></div>
-                <% } %>
+                    <% } %>
 
-                <div class="card border-0 shadow rounded">
-                    <div class="card-body">
-                        <a href="expense/create" class="btn btn-md btn-success mb-3">
-                            <i class="fa fa-plus"></i>&nbsp&nbsp ADD</a>
-                        <table class="table table-bordered">
-                            <thead>
-                              <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Item</th>
-                                <th scope="col">Reimburse</th>
-                                <th scope="col"></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                                <% if(data.length){
-                                    
-                                    for(var i = 0; i< data.length; i++) {%>  
-                                        <tr>
-                                            <th scope="row" class="text-center"><%= (i+1) %></th>
-                                            <td><%= new Date(data[i].purchase_date).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }) %></td>
-                                            <td>Rp<%= data[i].purchase_amount %></td>
-                                            <td><%= data[i].purchase_item %></td>
-                                            <td><%= data[i].reimburse %></td>
-                                            <td class="text-center">
-                                                <a href="/expense/edit/<%=data[i].purchase_id%>" class="btn btn-sm btn-primary">
-                                                    <i class="fa fa-pencil-square-o"></i>&nbsp&nbsp EDIT</a>
-                                                <a onclick="return confirm('Are You Sure?')" href="/expense/delete/<%=data[i].purchase_id%>" class= "btn btn-sm btn-danger">
-                                                    <i class="fa fa-trash"></i>&nbsp&nbsp DELETE</a>
-                                            </td>
-                                        </tr>
-                                    <% }
-                                    
-                                }else{ %>
-                                    <tr>
-                                        <td colspan="5">
-                                            <div class="alert alert-danger" role="alert">
-                                                Data Not Available!
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <% } %>    
-                            </tbody>
-                        </table>  
-                    </div>
-                </div>
+                        <% if (messages.error) { %>
+                            <div class="alert alert-danger" role="alert"><%- messages.error %></div>
+                            <% } %>
+
+                                <div class="card border-0 shadow rounded">
+                                    <div class="card-body">
+                                        <a href="expense/create" class="btn btn-md btn-success mb-3">
+                                            <i class="fa fa-plus"></i>&nbsp&nbsp ADD</a>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">ID</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Amount</th>
+                                                    <th scope="col">Item</th>
+                                                    <th scope="col">Reimburse</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% if(data.length){ for(var i=0; i< data.length; i++) {%>
+                                                    <tr>
+                                                        <th scope="row" class="text-center">
+                                                            <%= (i+1) %>
+                                                        </th>
+                                                        <td>
+                                                            <%= new
+                                                                Date(data[i].purchase_date).toLocaleDateString("en-GB",
+                                                                { day: "2-digit" , month: "short" , year: "numeric" })
+                                                                %>
+                                                        </td>
+                                                        <td>Rp<%= data[i].purchase_amount %>
+                                                        </td>
+                                                        <td>
+                                                            <%= data[i].purchase_item %>
+                                                        </td>
+                                                        <td>
+                                                            <%= data[i].reimburse %>
+                                                        </td>
+                                                        <td><input type="checkbox" /></td>
+                                                        <td class="text-center">
+                                                            <a href="/expense/edit/<%=data[i].purchase_id%>"
+                                                                class="btn btn-sm btn-primary">
+                                                                <i class="fa fa-pencil-square-o"></i>&nbsp&nbsp EDIT</a>
+                                                            <a onclick="return confirm('Are You Sure?')"
+                                                                href="/expense/delete/<%=data[i].purchase_id%>"
+                                                                class="btn btn-sm btn-danger">
+                                                                <i class="fa fa-trash"></i>&nbsp&nbsp DELETE</a>
+                                                        </td>
+                                                    </tr>
+                                                    <% } }else{ %>
+                                                        <tr>
+                                                            <td colspan="5">
+                                                                <div class="alert alert-danger" role="alert">
+                                                                    Data Not Available!
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <% } %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
             </div>
         </div>
     </div>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    
+    <script type="text/javascript">
+        function checkAll(box) {
+            let checkboxes = document.getElementsByTagName('input');
+            if (box.checked) { // jika checkbox teratar dipilih maka semua tag input juga dipilih
+                for (let i = 0; i < checkboxes.length; i++) {
+                    if (checkboxes[i].type == 'checkbox') {
+                        checkboxes[i].checked = true;
+                    }
+                }
+            } else { // jika checkbox teratas tidak dipilih maka semua tag input juga tidak dipilih
+                for (let i = 0; i < checkboxes.length; i++) {
+                    if (checkboxes[i].type == 'checkbox') {
+                        checkboxes[i].checked = false;
+                    }
+                }
+            }
+        }
+    </script>
+
 </body>
+
 </html>
