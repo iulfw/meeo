@@ -54,7 +54,9 @@
                                 <th scope="col">Date</th>
                                 <th scope="col">Amount</th>
                                 <th scope="col">Item</th>
+                                <th scope="col">Receipt</th>
                                 <th scope="col">Reimburse</th>
+                                <th scope="col">Status</th>
                                 <th scope="col"></th>
                               </tr>
                             </thead>
@@ -67,7 +69,9 @@
                                             <td><%= new Date(data[i].purchase_date).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }) %></td>
                                             <td>Rp<%= data[i].purchase_amount %></td>
                                             <td><%= data[i].purchase_item %></td>
+                                            <td><img src="/uploads/<%= data[i].purchase_receipt %>" alt="<%= data[i].purchase_receipt %>" style="width: 100px; height: auto;"></td>
                                             <td><%= data[i].reimburse %></td>
+                                            <td><input type="checkbox" <%= data[i].reimburse_status ? 'checked' : '' %> disabled></td>
                                             <td class="text-center">
                                                 <a href="/expense/edit/<%=data[i].purchase_id%>" class="btn btn-sm btn-primary">
                                                     <i class="fa fa-pencil-square-o"></i>&nbsp&nbsp EDIT</a>
@@ -79,7 +83,7 @@
                                     
                                 }else{ %>
                                     <tr>
-                                        <td colspan="5">
+                                        <td colspan="7">
                                             <div class="alert alert-danger" role="alert">
                                                 Data Not Available!
                                             </div>
