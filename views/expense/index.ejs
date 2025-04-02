@@ -66,7 +66,14 @@
                                         <tr>
                                             <th scope="row" class="text-center"><%= (i+1) %></th>
                                             <td><%= new Date(data[i].purchase_date).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }) %></td>
-                                            <td><img src="/uploads/<%= data[i].purchase_receipt %>" alt="<%= data[i].purchase_receipt %>" style="width: 100px; height: auto;"></td>
+                                            <td>
+                                                <a href="/uploads/<%= data[i].purchase_receipt %>" target="_blank" class="file-link">
+                                                    <div class="file-container" style="border-radius: 10px;">
+                                                        <i class="fa fa-file-o"></i>
+                                                        <span class="file-name"><%= data[i].purchase_receipt %></span>
+                                                    </div>
+                                                </a>
+                                            </td>                                                                                  
                                             <td>Rp<%= data[i].purchase_amount %></td>
                                             <td><%= data[i].reimburse %></td>
                                             <td><input type="checkbox" <%= data[i].reimburse_status ? 'checked' : '' %> disabled style="transform: scale(1.5)"></td>
