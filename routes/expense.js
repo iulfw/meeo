@@ -15,24 +15,28 @@ var storage = multer.diskStorage({
 });
 
 var upload = multer({
-    storage: storage,
+    storage: multer.diskStorage({
+        destination: function(req, file, cb) {
+            cb(null, './public/uploads/');
+    },
+    filename: function (req, file, cb) {
+        let purchase_id = req.body.purchase_id || 'unknown';
+        cb(null, file.originalname);
+    }
+}),
     limits: { fileSize: 1000000 }, 
     fileFilter: function(req, file, cb) {
-        checkFileType(file, cb);
-    }
-}).single('purchase_receipt');
+        var filetypes = /jpeg|jpg|png|pdf/;
+        var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+        var mimetype = filetypes.test(file.mimetype);
 
-function checkFileType(file, cb) {
-    var filetypes = /jpeg|jpg|png|pdf/;
-    var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    var mimetype = filetypes.test(file.mimetype);
-
-    if (mimetype && extname) {
-        return cb(null, true);
-    } else {
-        cb('File Type Error!');
+        if (mimetype && extname) {
+            return cb(null, true);
+        } else {
+            cb('File Type Error!');
+        }
     }
-}
+});
 
 // INDEX
 router.get('/', function (req, res, next) {
@@ -50,18 +54,18 @@ router.get('/', function (req, res, next) {
 router.get('/create', function (req, res, next) {
     res.render('expense/create', {
         purchase_date: '',
-        purchase_amount: '',
         purchase_receipt: '',
+        purchase_amount: '',
         reimburse: '',
         reimburse_status: ''
     });
 });
 
 // STORE
-router.post('/store', function (req, res, next) {
+router.post('/store', upload.single('purchase_receipt'), function (req, res, next) {
     let purchase_date = req.body.purchase_date;
+    let purchase_receipt = req.file ? req.file.filename : null;
     let purchase_amount = req.body.purchase_amount;
-    // let purchase_receipt = req.file ? req.file.filename : null;
     let reimburse = req.body.reimburse;
     let reimburse_status = Array.isArray(req.body.reimburse_status) ? req.body.reimburse_status.pop() : req.body.reimburse_status; reimburse_status = reimburse_status === '1' ? 1 : 0;
     let errors = false;
@@ -71,15 +75,15 @@ router.post('/store', function (req, res, next) {
         req.flash('error', "Please Fill In All Fields");
         res.render('expense/create', {
             purchase_date,
+            purchase_receipt,
             purchase_amount,
-            // purchase_receipt,
             reimburse,
             reimburse_status
         });
     }
 
     if (!errors) {
-        let formData = { purchase_date, purchase_amount, reimburse, reimburse_status };
+        let formData = { purchase_date, purchase_receipt, purchase_amount, reimburse, reimburse_status };
         connection.query('INSERT INTO expense SET ?', formData, function (err) {
             if (err) {
                 req.flash('error', err);
@@ -106,20 +110,21 @@ router.get('/edit/:purchase_id', function (req, res, next) {
 });
 
 // UPDATE
-router.post('/update/:purchase_id', function (req, res, next) {
+router.post('/update/:purchase_id', upload.single('purchase_receipt'), function (req, res, next) {
 
     let purchase_id = req.params.purchase_id;
     let purchase_date = req.body.purchase_date;
+    let old_purchase_receipt = req.body.old_purchase_receipt;
+    let purchase_receipt = req.file ? req.file.originalname : old_purchase_receipt;
     let purchase_amount = req.body.purchase_amount;
-    // let purchase_receipt = req.file ? req.file.filename : old_purchase_receipt;
     let reimburse = req.body.reimburse;
     let reimburse_status = Array.isArray(req.body.reimburse_status) ? req.body.reimburse_status.pop() : req.body.reimburse_status; reimburse_status = reimburse_status === '1' ? 1 : 0;
 
     if (!purchase_date || !purchase_amount || !reimburse || !reimburse_status === null || !reimburse_status === undefined) {
         req.flash('error', "Please Fill In All Fields");
-        res.render('expense/edit', { purchase_id, purchase_date, purchase_amount, reimburse, reimburse_status });
+        res.render('expense/edit', { purchase_id, purchase_date, purchase_receipt, purchase_amount, reimburse, reimburse_status });
     } else {
-        let formData = { purchase_date, purchase_amount, reimburse, reimburse_status };
+        let formData = { purchase_date, purchase_receipt, purchase_amount, reimburse, reimburse_status };
         connection.query('UPDATE expense SET ? WHERE purchase_id = ?', [formData, purchase_id], function (err) {
             if (err) {
                 req.flash('error', err);
